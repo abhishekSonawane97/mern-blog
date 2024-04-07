@@ -76,7 +76,6 @@ const FooterComp = () => {
                 <Footer.Icon href="#" icon={BsInstagram} />
                 <Footer.Icon href="#" icon={BsTwitter} />
                 <Footer.Icon href="https://github.com/abhishekSonawane97" icon={BsGithub} />
-                {/* <Footer.Icon href="#" icon={BsFacebook} /> */}
             </div>
         </div>
       </div>
