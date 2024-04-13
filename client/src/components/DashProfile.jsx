@@ -146,7 +146,7 @@ const DashProfile = () => {
   const handleSignout = async()=>{
     try{
       const res = await fetch(`/api/user/signout`,{
-        method : 'POST',
+        method : 'POST', 
       });
       const data = await res.json();
       if(!res.ok){
