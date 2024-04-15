@@ -21,9 +21,9 @@ const CreatePost = () => {
             <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">
                 <FileInput type={'file'} accept='image/*'/>
                 <Button type='button' gradientDuoTone={'purpleToBlue'} size={'sm'} outline>Upload image</Button>
-                <ReactQuill theme="snow" placeholder='write something...' className='h-73 mb-12' required/>
-                <Button type='submit' gradientDuoTone={'purpleToPink'}>Publish</Button>
             </div>
+                <ReactQuill theme="snow" placeholder='write something...' className='h-72 mb-12' required/>
+                <Button type='submit' gradientDuoTone={'purpleToPink'}>Publish</Button>
         </form>
     </div>
   )
