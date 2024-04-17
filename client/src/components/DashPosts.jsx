@@ -6,23 +6,26 @@ const DashPosts = () => {
 
     const getPosts = async()=>{
         try{
-            // const res = await fetch('/api/post/');
-            // const data =  await res.json();
-            // if(!res.ok){
-            //     console.log(data.message);
-            //     return;
-            // }
-            // if(res.ok){
-            //     console.log(data);
-            //     setPosts(data);
-            //     return;
-            // }
+            const res = await fetch('/api/post/getPosts',{
+                method: 'GET'
+            });
+            const data =  await res.json();
+            if(!res.ok){
+                console.log(data.message);
+                return;
+            }
+            if(res.ok){
+                console.log(data);
+                setPosts(data);
+                return;
+            }
 
         }
         catch(err){
             console.log(err);
         }
     }
+    // getPosts();
 
   return (
     <div>
