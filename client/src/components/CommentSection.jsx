@@ -1,4 +1,4 @@
-import { Button, Textarea } from 'flowbite-react';
+import { Alert, Button, Textarea } from 'flowbite-react';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -9,6 +9,7 @@ const CommentSection = ({postId}) => {
 
     const { currentUser } = useSelector(state => state.user);
     const [ comment, setComment ] = useState('');
+    const [ commentError, setCommentError ] = useState(null);
 
     const handleSubmit = async(e)=>{
       e.preventDefault();
@@ -25,14 +26,16 @@ const CommentSection = ({postId}) => {
 
           const data = await res.json();
           if(!res.ok){
-
+            setCommentError(data.message)
           }
           if(res.ok){
             setComment("");
+            // console.log(data);
+            setCommentError(null);
           }
         }
         catch(err){
-
+          setCommentError(err.message);
         }
     }
 
@@ -60,6 +63,9 @@ const CommentSection = ({postId}) => {
                         <p className='text-gray-500 text-xs' >{200 - comment.length} characters remaining</p>
                         <Button outline gradientDuoTone={'purpleToBlue'} type='submit'  >Submit</Button>
                     </div>
+                    {
+                      commentError && <Alert color={'failure'} className='mt-5' >{commentError}</Alert>
+                    }
             </form>
         )
       }
