@@ -1,8 +1,10 @@
-import { Alert, Button, Textarea } from 'flowbite-react';
 import React, { useEffect, useState } from 'react';
+import { Alert, Button, Textarea, Modal } from 'flowbite-react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Comments from './Comments';
+import { HiOutlineExclamationCircle } from 'react-icons/hi'
+
 
 
 const CommentSection = ({postId}) => {
@@ -12,6 +14,8 @@ const CommentSection = ({postId}) => {
     const [ comment, setComment ] = useState('');
     const [ commentError, setCommentError ] = useState(null);
     const [ comments, setComments ] = useState([]);
+    const [ showModal, setShowModal ] = useState(false);
+    const [ commentToDelete, setCommentToDelete ] = useState(null);
     const navigate = useNavigate();
 
     const handleSubmit = async(e)=>{
@@ -20,7 +24,6 @@ const CommentSection = ({postId}) => {
         return;
       }
       try{
-          // console.log('handle submit');
           setCommentError(null);
           const res = await fetch(`/api/comment/create`, {
             method : 'POST',
@@ -34,7 +37,6 @@ const CommentSection = ({postId}) => {
           }
           if(res.ok){
             setComment("");
-            // console.log(data);
             setCommentError(null);
             setComments([data, ...comments]);
           }
@@ -96,9 +98,43 @@ const CommentSection = ({postId}) => {
       }
       catch(err){
         console.log(err.message);
-      }
+      } 
     };
 
+    const handleEdit = async( comment, editedContent )=>{
+      try{
+        setComments(comments.map(c => (
+          comment._id === c._id ? {...c, content : editedContent} : c
+        )))
+      }
+      catch(err){
+        console.log(err.message)
+      }
+    };
+    
+    const handleDeleteComment = async(commentToDelete)=>{
+      setShowModal(false);
+      try{
+        if(!currentUser){
+          navigate('/sign-in');
+          return;
+        }
+          const res = await fetch(`/api/comment/deleteComment/${commentToDelete}`,{
+              method : 'DELETE',
+          });
+          const data = await res.json();
+  
+          if(!res.ok){
+              console.log(data.message);
+          }
+          if(res.ok){
+              setComments(prev => prev.filter(comment => comment._id !== commentToDelete ) )
+          }
+      }
+      catch(err){
+          console.log(err);
+      }
+    };
 
   return (
     <div className='mx-2xl mx-auto w-full p-3'>
@@ -143,12 +179,43 @@ const CommentSection = ({postId}) => {
                 </div>
                 {
                   comments.map(comment => (
-                    <Comments key={comment._id} comment={comment} onLike={ handleLike } />
+                    <Comments key={comment._id} comment={comment} onLike={ handleLike } onEdit={handleEdit} onDelete={(commentId)=> {
+                      setShowModal(true);
+                      setCommentToDelete(commentId);
+
+                    }} />
                   ))
                 }
                 </>
               )
             }
+
+{showModal && (
+        <Modal
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          popup
+          size={"md"}
+        >
+          <Modal.Header />
+          <Modal.Body>
+            <div className="text-center">
+              <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+              <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+                Are you sure you want to delete this comment?
+              </h3>
+              <div className="flex justify-center gap-4">
+                <Button onClick={() => handleDeleteComment(commentToDelete)} color={"failure"}>
+                  Yes, I'm sure
+                </Button>
+                <Button onClick={() => setShowModal(false)} color={"gray"}>
+                  No, Cancel
+                </Button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+      )}
     </div>
   )
 }
