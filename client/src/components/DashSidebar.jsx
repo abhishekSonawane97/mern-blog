@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Sidebar } from 'flowbite-react';
+<<<<<<< HEAD
 import { HiAnnotation, HiArrowSmRight, HiChartPie, HiDocumentText, HiOutlineUserGroup, HiUser } from 'react-icons/hi';
+=======
+import { HiAnnotation, HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiUser } from 'react-icons/hi';
+>>>>>>> 86ee6d1f0413c1787e51ff5ba39e74d0daebd5cd
 import { Link, useLocation } from 'react-router-dom';
 import { signoutSuccess } from '../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
