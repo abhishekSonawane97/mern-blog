@@ -5,10 +5,7 @@ import DashProfile from '../components/DashProfile';
 import DashPosts from '../components/DashPosts';
 import DashUsers from '../components/DashUsers';
 import DashComments from '../components/DashComments';
-<<<<<<< HEAD
 import DashboardComp from '../components/DashboardComp';
-=======
->>>>>>> 86ee6d1f0413c1787e51ff5ba39e74d0daebd5cd
 
 const Dashboard = () => {
 
@@ -44,12 +41,9 @@ const Dashboard = () => {
       {
         tab === 'comments' && <DashComments />
       }
-<<<<<<< HEAD
       {
         tab === 'dash' && <DashboardComp />
       }
-=======
->>>>>>> 86ee6d1f0413c1787e51ff5ba39e74d0daebd5cd
     </div>
   )
 }

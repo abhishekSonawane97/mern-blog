@@ -61,7 +61,6 @@ export const getPosts = async(req, res, next ) =>{
             totalPost,
             lastMonthPosts,
         });
-
     }
     catch(error){
         next(error);
